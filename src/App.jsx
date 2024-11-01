@@ -20,9 +20,7 @@ function App() {
   const WeatherURL = (city) =>
     `https://api.weatherapi.com/v1/forecast.json?key=83c0b17cb2774eac95723527231501&q=${city}&days=7&aqi=no&alerts=no`;
 
-  const handleInput = (e) => {
-    setCity(e.target.value);
-  };
+  
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
@@ -37,6 +35,7 @@ function App() {
       fetchAutoCompAPI(city); // Pass the city value to fetchAutoCompAPI
     }
   }, [city]);
+  
 
   const handlSelectedCity = (selectedCity) => {
     console.log("clicked city", selectedCity);
@@ -78,10 +77,24 @@ function App() {
   return (
     <div className="container p-5 rounded mt-5 opacity-75">
       <header className="d-flex justify-content-between align-items-center mb-3">
-        <h1>Weather App</h1>
-        <button onClick={toggleTheme} className="btn btn-secondary">
+       <div className="d-flex">
+        <button onClick={toggleTheme} className="btn btn-secondary me-2">
           {theme === "light" ? "Dark" : "Light"} Mode
         </button>
+        <button
+  onClick={() => {
+    setCity("");
+    setCitySuggestion([]);
+    setCurrent(null);
+    setForecast(null);
+    setLocation(null);
+    setClickedCity(null);
+  }}
+  className="btn btn-secondary"
+>
+  Clear
+</button>
+</div>
       </header>
 
       <input
@@ -89,7 +102,20 @@ function App() {
         value={ClickedCity}
         placeholder="ENTER THE CITY NAME"
         className="form-control input-width"
-        onChange={handleInput}
+        onChange={(e)=>{setCity(e.target.value);
+         
+            //if (e.target.value === "") {
+             // setCitySuggestion([]);
+              //setCurrent(null);
+             // setForecast(null);
+             // setLocation(null);
+              //setClickedCity(null);
+          //  }
+          }
+          }
+      
+      
+        
       />
 
       {citySuggestion &&
